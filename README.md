@@ -35,7 +35,7 @@ flutter build apk --release --target-platform android-arm64 --dart-define-from-f
 
 ## 🏗️ Estructura
 
-```
+```text
 lib/
 ├── dominio/        excepciones (mensajeSeguro) · modelos (Clima, TipoCambio, Festivo, ResumenWiki, FotoAstronomica)
 ├── datos/          cliente_seguro (ÚNICA puerta a internet) · config_claves · servicios (una clase por API)
@@ -51,9 +51,7 @@ secrets.json.example   ← plantilla SIN secretos
 
 ### 1. 🔴 ROJO — las pruebas se escriben primero y fallan
 
-Las pruebas de `test/` se escribieron **antes** que el código. Al correr `flutter test` con `lib/` todavía vacía, nada compila:
-
-![Rojo: las pruebas no compilan](captura/01_rojo_no_compila.png)
+Las pruebas de `test/` se escribieron **antes** que el código. Al correr `flutter test` con `lib/` todavía vacía, nada compila.
 
 ### 2. ❌ Error real atrapado por una prueba
 
@@ -65,9 +63,7 @@ double pesosPorUnidad(String moneda) => 1 / tasas[moneda]!;   // ❌ con tasa 0 
 
 Si el servidor (o alguien en medio) manda `"USD": 0`, la tarjeta mostraría **"1 USD = $Infinity MXN"**. Siguiendo la
 regla del manual de *validar también la salida del servidor*, se escribió la prueba *"una tasa en cero no produce
-Infinity"* y falló:
-
-![Error atrapado por la prueba](captura/02_error.png)
+Infinity"* y falló.
 
 **Corrección:** validar al convertir el JSON; un dato absurdo se vuelve `RespuestaInvalidaException` con mensaje claro:
 
@@ -85,21 +81,17 @@ valores normales y `***` literal para los secretos.
 
 ### 3. 🔵 REFACTOR — limpiar sin romper nada
 
-`flutter analyze` señaló avisos de estilo:
+`flutter analyze` señaló avisos de estilo.
 
-![Analyze con avisos](captura/03_analyze_avisos.png)
-
-Se corrigieron y se volvió a analizar:
-
-![Analyze limpio](captura/04_analyze_limpio.png)
+Se corrigieron y se volvió a analizar hasta dejar `flutter analyze` limpio.
 
 ### 4. 🟢 VERDE — las 42 pruebas pasan
 
-![Verde: todas las pruebas pasan](captura/05_verde_pruebas.png)
+Las 42 pruebas del proyecto pasan tras completar el ciclo de desarrollo y correcciones.
 
 ### 5. 📦 Compilación del APK
 
-![Compilación del APK](captura/06_build_apk.png)
+El APK de liberación se compila en modo `release` para `android-arm64`.
 
 ---
 
@@ -155,4 +147,3 @@ flutter test
 ```bash
 flutter run
 ```
-
